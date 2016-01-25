@@ -20,7 +20,7 @@ func main() {
 
 	runOpts := robin.DefaultRunnerOptions
 
-	flag.StringVar(&configPath, "c", "", "path to the configuration file")
+	flag.StringVar(&configPath, "f", "", "path to the configuration file")
 	flag.StringVar(&scraperName, "s", "", "scraper to run")
 	flag.BoolVar(&logLevelError, "v", false, "log level error")
 	flag.BoolVar(&logLevelInfo, "vv", false, "log level info")
@@ -28,7 +28,7 @@ func main() {
 	flag.Parse()
 
 	if configPath == "" {
-		fmt.Printf("-f flag is mandatory\n")
+		fmt.Printf("-c flag is mandatory\n")
 		os.Exit(1)
 	}
 
@@ -49,6 +49,10 @@ func main() {
 	scrapers, err := c.Scrapers()
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if len(scrapers) == 0 {
+		log.Fatal("no scrapers found in config file")
 	}
 
 	if len(scrapers) > 1 && scraperName == "" {
