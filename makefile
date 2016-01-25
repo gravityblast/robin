@@ -1,4 +1,4 @@
-.PHONY: default test lint vet build .build build-with-docker
+.PHONY: default test lint vet build release build-with-docker test-with-docker
 
 GO=GO15VENDOREXPERIMENT=1 go
 
@@ -14,10 +14,11 @@ lint:
 vet:
 	$(GO) vet . ./cmd/...
 
-build: build-with-docker
+build: test
+	$(GO) build
 
-.build: test
-	$(GO) build -o build/robin ./cmd/robin
+release:
+	$(GO) build -o ./release/robin ./cmd/robin
 
 build-with-docker:
 	mkdir -p build && \
@@ -25,7 +26,7 @@ build-with-docker:
 		-v $$(pwd):/go/src/github.com/pilu/robin \
 		-w /go/src/github.com/pilu/robin \
 		gravityblast/go-build \
-		make .build
+		make build
 
 test-with-docker:
 	mkdir -p build && \
