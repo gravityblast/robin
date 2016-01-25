@@ -1,0 +1,41 @@
+{
+  "index": {
+    "url": "http://localhost:8000/index.html",
+    "followers": {
+      "items": {
+        "selector": ".container .list .item",
+        "links": {
+          "page": {
+            "selector": "a",
+            "attribute": "href"
+          }
+        }
+      }
+    }
+  },
+
+  "detail": {
+    "url": "http://localhost:8000/item-1.html",
+    "extractors": {
+      "detail": {
+        "selector": ".container",
+        "fields": {
+          "title": {
+            "selector": "h1"
+          }
+        }
+      },
+      "author": {
+        "selector": ".authors .author",
+        "fields": {
+          "name": {
+            "selector": ".name"
+          },
+          "surname": {
+            "selector": ".lastname"
+          }
+        }
+      }
+    }
+  }
+}
