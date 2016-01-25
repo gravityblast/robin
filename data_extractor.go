@@ -1,6 +1,10 @@
 package robin
 
-import "github.com/PuerkitoBio/goquery"
+import (
+	"strings"
+
+	"github.com/PuerkitoBio/goquery"
+)
 
 type DataExtractor interface {
 	Extract(*goquery.Selection) string
@@ -19,7 +23,8 @@ func NewTextExtractor(selector string) *textExtractor {
 }
 
 func (e *textExtractor) Extract(s *goquery.Selection) string {
-	return s.Find(e.Selector).Text()
+	text := s.Find(e.Selector).Text()
+	return strings.TrimSpace(text)
 }
 
 type attributeExtractor struct {
